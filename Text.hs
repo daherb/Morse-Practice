@@ -1,4 +1,4 @@
-module Morse where
+module Text where
 
 import Test.QuickCheck
 import Data.Char
