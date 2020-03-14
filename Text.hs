@@ -3,17 +3,16 @@ module Text where
 import Test.QuickCheck
 import Data.Char
 
-letters = "adehilortvxzö "
 
-loadFile :: FilePath -> IO [String]
-loadFile infile =
+loadDict :: FilePath -> String -> IO [String]
+loadDict infile ltrs =
   do
   content <- lines <$> readFile infile
-  return $ filter (all $ flip (elem . toLower) letters) content
+  return $ filter (all $ flip (elem . toLower) ltrs) content
 
 sampleText :: [String] -> Int -> IO String
-sampleText words count =
-  unwords <$> generate (vectorOf count (elements words))
+sampleText dict count =
+  unwords <$> generate (vectorOf count (elements dict))
   
 
 
