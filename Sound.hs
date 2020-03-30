@@ -36,6 +36,7 @@ charToLtr c
   | toLower c == 'k' = Just $ Ltr [Lng,  Shrt, Lng ]
   | toLower c == 'l' = Just $ Ltr [Shrt, Lng,  Shrt, Shrt]
   | toLower c == 'm' = Just $ Ltr [Lng,  Lng]
+  | toLower c == 'n' = Just $ Ltr [Lng, Shrt]
   | toLower c == 'o' = Just $ Ltr [Lng,  Lng,  Lng]
   | toLower c == 'p' = Just $ Ltr [Shrt, Lng,  Lng,  Shrt]
   | toLower c == 'q' = Just $ Ltr [Lng,  Lng,  Shrt, Lng ]
