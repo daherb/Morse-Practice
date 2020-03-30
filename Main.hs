@@ -18,7 +18,7 @@ usage =
     putStrLn "\tlang: language of the wordlist, i.e. en, de or sv"
     putStrLn "\tno.words: number of words in the text to be created"
     putStrLn "\twav-file: the output file to be written"
-    putStrLn "\tletters: optional list of letters that should be practiced"
+    putStrLn "\tletters: optional list of letters that should be practiced. If this list contains punctuation or digits, they will be randomly generated between words"
     putStrLn "\ttxt-file: optional output file for the text"
 
 main :: IO ()
@@ -32,6 +32,6 @@ main =
         let ltrs = if length args >= 4 then (args !! 3) else letters
         dict <- loadDict (args !! 0 ++ ".txt") ltrs
         let wav = args !! 2
-        text <- sampleText dict ct
+        text <- sampleText dict ltrs ct
         textToMorse text wav
         if length args == 5 then writeFile (args !! 4) text else return ()
