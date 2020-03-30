@@ -29,7 +29,7 @@ main =
       else
       do
         let ct = read (args !! 1)
-        let ltrs = if length args == 4 then (args !! 3) else letters
+        let ltrs = if length args >= 4 then (args !! 3) else letters
         dict <- loadDict (args !! 0 ++ ".txt") ltrs
         let wav = args !! 2
         text <- sampleText dict ct
