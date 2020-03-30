@@ -8,10 +8,10 @@ import Control.Monad
 import Control.Monad.Extra
 
 
-data Tn = Shrt | Lng
-newtype Ltr = Ltr [Tn]
-newtype Wd = Wd [Ltr]
-newtype Txt = Txt [Wd]
+data Tn = Shrt | Lng deriving Show
+newtype Ltr = Ltr [Tn] deriving Show
+newtype Wd = Wd [Ltr] deriving Show
+newtype Txt = Txt [Wd] deriving Show
 
 data WAVs = WAVs {
   short_tone :: WAVE,
