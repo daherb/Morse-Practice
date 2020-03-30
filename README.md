@@ -20,7 +20,9 @@ where
 	lang: language of the wordlist, i.e. en, de or sv
 	no.words: number of words in the text to be created
 	wav-file: the output file to be written
-	letters: optional list of letters that should be practiced
+	letters: optional list of letters that should be practiced.
+		If this list contains punctuation or digits,
+		they will be randomly generated between words
 	txt-file: optional output file for the text
 ```
 

@@ -18,7 +18,9 @@ usage =
     putStrLn "\tlang: language of the wordlist, i.e. en, de or sv"
     putStrLn "\tno.words: number of words in the text to be created"
     putStrLn "\twav-file: the output file to be written"
-    putStrLn "\tletters: optional list of letters that should be practiced. If this list contains punctuation or digits, they will be randomly generated between words"
+    putStrLn "\tletters: optional list of letters that should be practiced."
+    putStrLn "\t\tIf this list contains punctuation or digits,"
+    putStrLn "\t\tthey will be randomly generated between words"
     putStrLn "\ttxt-file: optional output file for the text"
 
 main :: IO ()
