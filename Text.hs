@@ -45,7 +45,7 @@ skipFirstSpecial (w:ws)
   
 sampleText :: [String] -> String -> Int -> IO String
 sampleText dict chars count =
-  unwords <$> takeNWords count <$> skipFirstSpecial <$> (generate $ infiniteListOf (frequency [(9,genWord dict),(1,genSpecial chars)]))
+  unwords <$> takeNWords count <$> skipFirstSpecial <$> (generate $ infiniteListOf (frequency [(6,genWord dict),(1,genSpecial chars)]))
   
   
 
