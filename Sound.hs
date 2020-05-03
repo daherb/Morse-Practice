@@ -45,6 +45,7 @@ charToLtr c
   | toLower c == 't' = Just $ Ltr [Lng ]
   | toLower c == 'u' = Just $ Ltr [Shrt, Shrt, Lng ]
   | toLower c == 'v' = Just $ Ltr [Shrt, Shrt, Shrt, Lng ]
+  | toLower c == 'w' = Just $ Ltr [Shrt, Lng,  Lng]
   | toLower c == 'x' = Just $ Ltr [Lng,  Shrt, Shrt, Lng ]
   | toLower c == 'y' = Just $ Ltr [Lng,  Shrt, Lng,  Lng ]
   | toLower c == 'z' = Just $ Ltr [Lng,  Lng,  Shrt, Shrt]
