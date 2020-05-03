@@ -85,16 +85,29 @@ charToLtr c
 stringToTxt :: String -> Maybe Txt
 stringToTxt = fmap Txt . mapM (fmap Wd . mapM charToLtr) . words
 
-loadWavs :: IO WAVs
-loadWavs =
-  do
-    short_tone   <- getWAVEFile "wav/short_tone.wav"
-    long_tone    <- getWAVEFile "wav/long_tone.wav"
-    tone_break   <- getWAVEFile "wav/tone_break.wav"
-    letter_break <- getWAVEFile "wav/letter_break.wav"
-    word_break   <- getWAVEFile "wav/word_break.wav"
-    return (WAVs short_tone long_tone tone_break letter_break word_break)
-  
+-- loadWavs :: IO WAVs
+-- loadWavs =
+--   do
+--     short_tone   <- getWAVEFile "wav/short_tone.wav"
+--     long_tone    <- getWAVEFile "wav/long_tone.wav"
+--     tone_break   <- getWAVEFile "wav/tone_break.wav"
+--     letter_break <- getWAVEFile "wav/letter_break.wav"
+--     word_break   <- getWAVEFile "wav/word_break.wav"
+--     return (WAVs short_tone long_tone tone_break letter_break word_break)
+
+loadWavs :: Int -> Int -> WAVs
+loadWavs tone_rate break_rate =
+  let
+    tone_len = 1200.0/(fromIntegral tone_rate/5)/1000.0 :: Double
+    break_len = 1200.0/(fromIntegral break_rate/5)/1000.0 :: Double
+    short_tone = generateTone tone_len
+    long_tone = generateTone (3 * tone_len)
+    tone_break = generateSilence tone_len
+    letter_break = generateSilence (3 * break_len)
+    word_break = generateSilence (7 * break_len)
+  in
+    WAVs short_tone long_tone tone_break letter_break word_break
+    
 txtToWav :: WAVs -> Txt -> Maybe WAVE
 txtToWav wavs (Txt wrds) =
   let
@@ -134,13 +147,35 @@ concatWaves (WAVE hdr1 smpls1) (WAVE hdr2 smpls2)
     mergeHeader (WAVEHeader chnls frmr bps frms1) (WAVEHeader _ _ _ frms2) =
       WAVEHeader chnls frmr bps (liftM2 (+) frms1 frms2)
 
-textToMorse :: String -> FilePath -> IO ()
-textToMorse txt fn =
+textToMorse :: Int -> Int -> String -> FilePath -> IO ()
+textToMorse tone_rate break_rate txt fn =
   do
-    wavs <- loadWavs
+    let wavs = loadWavs tone_rate break_rate 
     let wf = join $ txtToWav wavs <$> (stringToTxt $ "= " ++ txt ++ " = +")
     case wf of {
       Nothing -> error "Unable to convert text" ;
       Just wf' -> putWAVEFile fn wf'
       }
     
+
+-- | Generate len seconds of square wave
+generateTone :: Double -> WAVE
+generateTone len =
+  let
+    max = 2147483647  -- MAXINT32
+    min = -2147483648 -- MININT32
+    smplcnt = round $ len * 44100
+    hdr = WAVEHeader 1 44100 8 (Just smplcnt)
+    smpls = take smplcnt $ cycle (replicate 50 [min] ++ replicate 50 [max]) 
+  in
+    WAVE hdr smpls
+
+-- | Generate len seconds of silence
+generateSilence :: Double -> WAVE
+generateSilence len =
+  let
+    smplcnt = round $ len * 44100
+    hdr = WAVEHeader 1 44100 8 (Just smplcnt)
+    smpls = take smplcnt $ cycle [[0]] 
+  in
+    WAVE hdr smpls

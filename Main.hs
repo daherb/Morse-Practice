@@ -9,15 +9,19 @@ import Sound
 letters = "abcdefghijklmnopqrstuvxyzåäößü1234567890?!,.-()@/%\"';:=+√ "
 -- letters = "adehilortvxzö "
 
+rate = 40
+
 usage :: IO ()
 usage =
   do
     prg <- getProgName
-    putStrLn $ unwords [prg++":","lang","no.words","wav-file","(letters)","(txt-file)"]
+    putStrLn $ unwords [prg++":","lang","no.words","wav-file","(letter rate)","(break-rate)","(letters)","(txt-file)"]
     putStrLn "\nwhere"
     putStrLn "\tlang: language of the wordlist, i.e. en, de or sv"
     putStrLn "\tno.words: number of words in the text to be created"
     putStrLn "\twav-file: the output file to be written"
+    putStrLn "\tletter rate: optional speed of letters in characters per minute"
+    putStrLn "\tbreak rate: optional speed of breaks in characters per minute"
     putStrLn "\tletters: optional list of letters that should be practiced."
     putStrLn "\t\tIf this list contains punctuation or digits,"
     putStrLn "\t\tthey will be randomly generated between words"
@@ -31,9 +35,11 @@ main =
       else
       do
         let ct = read (args !! 1)
-        let ltrs = if length args >= 4 then (args !! 3) else letters
+        let letter_rate = if length args >= 4 then (read $ args !! 3) else rate
+        let break_rate = if length args >= 5 then (read $ args !! 4) else rate
+        let ltrs = if length args >= 6 then (args !! 5) else letters
         dict <- loadDict (args !! 0 ++ ".txt") ltrs
         let wav = args !! 2
         text <- sampleText dict ltrs ct
-        textToMorse text wav
-        if length args == 5 then writeFile (args !! 4) text else return ()
+        textToMorse letter_rate break_rate text wav
+        if length args == 7 then writeFile (args !! 6) text else return ()
