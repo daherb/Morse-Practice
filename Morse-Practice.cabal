@@ -15,8 +15,17 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md
 cabal-version:       >=1.10
 
-executable Morse-Practice
+executable Morse-Trainer
   main-is:             Main.hs
+  other-modules:       Text, Sound
+  -- other-extensions:
+  build-depends:       base >=4.12 && <4.13, QuickCheck >=2.13 && <2.14,
+                       WAVE, monad-extras
+  -- hs-source-dirs:
+  default-language:    Haskell2010
+
+executable Txt2Morse
+  main-is:             MainTxt2Morse.hs
   other-modules:       Text, Sound
   -- other-extensions:
   build-depends:       base >=4.12 && <4.13, QuickCheck >=2.13 && <2.14,
