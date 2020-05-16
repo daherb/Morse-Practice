@@ -81,6 +81,7 @@ charToLtr c
   | toLower c == '=' = Just $ Ltr [Lng,  Shrt, Shrt, Shrt, Lng ]
   | toLower c == '+' = Just $ Ltr [Shrt, Lng,  Shrt, Lng,  Shrt]
   | toLower c == '√' = Just $ Ltr [Shrt, Lng,  Shrt, Shrt, Shrt]
+  | toLower c == '~' = Just $ Ltr [Lng,  Shrt, Lng,  Shrt, Lng]
   | otherwise = Nothing
 
 stringToTxt :: String -> Maybe Txt
