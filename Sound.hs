@@ -167,7 +167,8 @@ generateTone len =
     min = -2147483648 -- MININT32
     smplcnt = round $ len * 44100
     hdr = WAVEHeader 1 44100 8 (Just smplcnt)
-    smpls = take smplcnt $ cycle (replicate 50 [min] ++ replicate 50 [max]) 
+    -- 800hz at 44100 samples
+    smpls = take smplcnt $ cycle (replicate (round $ 44100/800/2) [min] ++ replicate (round $ 44100/800/2) [max]) 
   in
     WAVE hdr smpls
 
