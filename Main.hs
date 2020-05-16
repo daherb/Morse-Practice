@@ -15,7 +15,7 @@ usage :: IO ()
 usage =
   do
     prg <- getProgName
-    putStrLn $ unwords [prg++":","lang","no.words","wav-file","(letter rate)","(break-rate)","(letters)","(txt-file)"]
+    putStrLn $ unwords [prg++":","lang","no.words","wav-file","(letter rate)","(break-rate)","(txt-file)","(letters)"]
     putStrLn "\nwhere"
     putStrLn "\tlang: language of the wordlist, i.e. en, de or sv"
     putStrLn "\tno.words: number of words in the text to be created"
