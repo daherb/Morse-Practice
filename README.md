@@ -28,3 +28,5 @@ where
 
 License:
 The word lists are as far as I can see CC (see corresponding webpages) and this code is licensed under Artistic License 2.0 (see LICENSE file)
+
+Copyright (c) 2020 Herbert Lange
